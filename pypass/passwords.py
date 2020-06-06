@@ -1,6 +1,7 @@
 "Defines class model for passwords and defines how they are to be saved."
 
 import json
+from typing import List
 
 
 class PasswordSet:
@@ -23,11 +24,25 @@ class PasswordSet:
 
         return cls(service_name=data["service_name"], account_info=data["account_info"])
 
+    @classmethod
+    def from_dict(cls, data: dict):
+        "Builds a PasswordSet from the provided dict."
+
+        return cls(service_name=data["service_name"], account_info=data["account_info"])
 
 
 
 
+def sets_from_json(jsonstr: str) -> List[PasswordSet]:
+    "Parses a JSON file into a list of PasswordSets."
 
+    first_list = json.loads(jsonstr)
+    result = list()
+
+    for j in first_list:
+        result.append(PasswordSet.from_dict(j))
+
+    return result
 
 
 
